@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_stock_orderpoint_tree" model="ir.ui.view">
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree_editable" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_forecast']" position="after">
+                <field name="stock_days" optional="show" decoration-danger="stock_days &lt; 10" />
+            </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">stock_days</attribute>
+            </xpath>
+    </field>
+    </record>
+</odoo>

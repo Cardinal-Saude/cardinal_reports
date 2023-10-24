@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_mrporder_cardinal" inherit_id="mrp.report_mrporder">
+            <xpath expr="//div[@class='row mt32 mb32']" position="before">
+                <br />
+                <div class="col-5 offset-7">
+                    <p>[ ] Concluir Produção / [ ] Tempo Registrado</p>
+                </div>
+            </xpath>
+
+            <xpath expr="//div/div[6]" position="replace">
+                <div t-if="o.workorder_ids" groups="mrp.group_mrp_routings">
+                    <h3>
+                        <span t-if="o.state == 'done'">Operations Done</span>
+                        <span t-else="">Operations Planned</span>
+                    </h3>
+                    <table class="table table-sm">
+                        <tr>
+                            <th>
+                                <strong>Operação</strong>
+                            </th>
+                            <th>
+                                <strong>Centro de Trabalho</strong>
+                            </th>
+                            <th>
+                                <strong>No. de Minutos</strong>
+                            </th>
+                        </tr>
+                        <div t-foreach="o.workorder_ids" t-as="line2">
+                            <tr>
+                                <td>
+                                    <span t-field="line2.name" />
+                                </td>
+                                <td>
+                                    <span t-field="line2.workcenter_id.name" />
+                                </td>
+                                <td>
+                                    <span t-if="o.state != 'done'" t-field="line2.duration_expected" />
+                                    <span t-if="o.state == 'done'" t-field="line2.duration" />
+                                </td>
+                            </tr>
+                            <tr t-if="line2.operation_note" style="font-size: 14px !important;">
+                                <td colspan="3">
+                                    <span>-</span>
+                                    <span t-field="line2.operation_note" />
+                                </td>
+                            </tr>
+                        </div>
+                    </table>
+                </div>
+            </xpath>
+
+            <xpath expr="//table[1]/thead/tr/th[2]" position="before">
+                <th t-attf-class="{{ 'text-right' if not has_product_barcode else '' }}">Qtde.
+                    Unitária</th>
+            </xpath>
+
+            <xpath expr="//table[1]/tbody/t/tr/td[2]" position="before">
+                <td t-attf-class="{{ 'text-right' if not has_product_barcode else '' }}">
+                    <span t-esc="'{:.3f}'.format(raw_line.product_uom_qty / o.product_qty)" />
+                    <span t-field="raw_line.product_uom" groups="uom.group_uom" />
+                </td>
+            </xpath>
+        </template>
+    </data>
+</odoo>

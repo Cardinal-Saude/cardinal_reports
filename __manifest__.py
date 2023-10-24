@@ -1,0 +1,15 @@
+{
+    'name': 'Customização Cardinal',
+    'version': '14.0.0',
+    'summary': 'Aplicar customizações a variados relatórios',
+    'author': 'Guilherme Lindner',
+    'company': 'Cardinal Indústria e Comércio Ltda',
+    'website': 'https://www.cardinal.com.br',
+    'depends': ['mrp'],
+    'category': 'MRP',
+    'data': ['report/mrp_production_templates.xml'],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+    'license': 'AGPL-3',
+}
